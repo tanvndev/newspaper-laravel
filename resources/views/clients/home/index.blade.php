@@ -87,6 +87,52 @@
     </div><!-- .mnmd-block -->
     @endforeach
     @endif
+    @if (!empty($postCatalogues))
+    @foreach ($postCatalogues as $postCatalogue)
+
+    <div class="mnmd-block mnmd-block--fullwidth mnmd-carousel">
+        <div class="container">
+            <div class="block-heading block-heading--center block-heading--lg">
+                <h4 class="block-heading__title">{{ $postCatalogue['name'] }}</h4>
+            </div>
+            @if (!empty($postCatalogue['posts']))
+            <div class="mnmd-carousel__inner owl-carousel js-carousel-4i20m">
+                @foreach ($postCatalogue['posts'] as $post)
+
+                <div class="slide-content">
+                    <article class="post post--card post--card-sm cat-1 text-center shadow-hover-4">
+                        <div class="post__thumb"><a href="#single-url">
+                                <div class="background-img" style="background-image: url('{{ $post['image'] }}')">
+                                </div>
+                            </a><a href="{{ route('post-detail', $post['post_id']) }}"
+                                class="post__cat post__cat--bg post__cat--overlap cat-theme-bg">News</a>
+                        </div>
+                        <div class="post__text">
+                            <h3 class="post__title typescale-1">
+                                <a href="{{ route('post-detail', $post['post_id']) }}">{{ $post['post_name']}}</a>
+                            </h3>
+                        </div>
+                        <div class="post__footer">
+                            <div class="post__meta">
+                                <time class="time published">
+                                    <i class="mdicon mdicon-schedule"></i>
+                                    {{convertDatetime($post['created_at'], 'd/m/Y') }}
+                                </time>
+                                <a href="{{ route('post-detail', $post['post_id']) }}"><i
+                                        class="mdicon mdicon-chat_bubble_outline"></i>0</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                @endforeach
+            </div>
+            @endif
+        </div><!-- .container -->
+    </div><!-- .mnmd-block -->
+    @endforeach
+    @endif
+
 
 </div>
 @endsection

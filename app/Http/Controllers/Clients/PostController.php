@@ -38,10 +38,11 @@ class PostController extends Controller
         $config['seo'] = [
             'title' => $post->name,
         ];
+        // dd($post);
+
         return view('clients.posts.detail', compact(
             'config',
             'post'
         ));
-        dd($post);
     }
 }

@@ -4,4 +4,30 @@
 .mt-0 {
     margin-top: 0;
 }
+.pagination .page-link {
+    display: inline-block;
+    min-width: 34px;
+    height: 34px;
+    margin: 2px;
+    padding: 0 4px;
+    border-radius: 3px;
+    background: #f5f5f5;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 34px;
+    text-align: center;
+    text-decoration: none !important;
+    text-transform: uppercase;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #fc3c2d;
+    border-color: transparent;
+}
+.pagination .page-item.disabled .page-link {
+    background-color: #f5f5f5;
+    opacity: 0.5;
+}
+
 /* Add here all your CSS customizations */

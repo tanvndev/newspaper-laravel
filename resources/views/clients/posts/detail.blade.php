@@ -11,19 +11,25 @@
                         <div class="single-content">
                             <div class="entry-thumb single-entry-thumb"><img src="{{ $post->image }}">
                             </div>
-                            <header class="single-header"><a href="#" class="entry-cat cat-theme cat-5">Tech</a>
+                            <header class="single-header"><a href="#" class="entry-cat cat-theme cat-5">{{
+                                    $post->post_catalogue_name }}</a>
                                 <h1 class="entry-title">{{ $post->name }}</h1>
-                                <div class="entry-teaser">{{ $post->description }}</div>
-                                {{-- <div class="entry-meta"><span class="entry-author entry-author--with-ava"><img
-                                            alt="Ryan Reynold" src="/assets/clients/img/users/avatar-1.jpg"
-                                            class="entry-author__avatar" height="34" width="34">By <a href="#"
-                                            class="entry-author__name" title="Posts by Ryan Reynold" rel="author">Ryan
-                                            Reynold</a> </span><time class="entry-date published"
-                                        datetime="2016-03-25T17:37:06" itemprop="datePublished"
-                                        title="March 25, 2016, 5:37 pm"><i class="mdicon mdicon-schedule"></i>17 hours
-                                        ago</time> <time class="updated" datetime="2016-03-25T17:37:06"
-                                        title="March 25, 2016, 5:37 pm">17 hours
-                                        ago</time></div> --}}
+                                <div class="entry-teaser">{!! $post->description !!}</div>
+                                <div class="entry-meta">
+                                    <span class="entry-author entry-author--with-ava">
+                                        <img alt="Ryan Reynold" src="/assets/clients/img/users/avatar-1.jpg"
+                                            class="entry-author__avatar" height="34" width="34">By
+                                        <a href="#" class="entry-author__name" title="Posts by Ryan Reynold"
+                                            rel="author">{{ $post->users->fullname }}</a>
+                                    </span>
+                                    <time class="entry-date published">
+                                        <i class="mdicon mdicon-schedule"></i>
+                                        {{ convertDatetime($post->created_at) }}
+                                    </time>
+                                    <time class="updated">
+                                        {{ convertDatetime($post->created_at) }}
+                                    </time>
+                                </div>
                             </header>
                             <div class="entry-interaction entry-interaction--horizontal">
                                 <div class="entry-interaction__left">
@@ -57,10 +63,13 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="entry-interaction__right"><a href="#comment"
-                                        class="comments-count entry-action-btn" data-toggle="tooltip"
-                                        data-placement="top" title="17 comments"><i
-                                            class="mdicon mdicon-chat_bubble"></i><span>17</span></a></div>
+                                <div class="entry-interaction__right">
+                                    <a href="#comment" class="comments-count entry-action-btn" data-toggle="tooltip"
+                                        data-placement="top" title="0 comments"><i
+                                            class="mdicon mdicon-chat_bubble"></i>
+                                        <span>0</span>
+                                    </a>
+                                </div>
                             </div>
                             <div class="single-body entry-content typography-copy" itemprop="articleBody">
                                 {!! $post->content !!}
@@ -527,95 +536,10 @@
                     </div><!-- Same category posts -->
                 </div><!-- .mnmd-main-col -->
                 <div class="mnmd-sub-col mnmd-sub-col--right sidebar js-sticky-sidebar" role="complementary">
-                    <!-- Widget Indexed posts C -->
-                    <div class="mnmd-widget-indexed-posts-c mnmd-widget widget">
-                        <div class="widget__title">
-                            <h4 class="widget__title-text"><span class="first-word">Popular</span> posts</h4>
-                            <div class="widget__title-seperator"></div>
-                        </div>
-                        <ol class="posts-list list-space-md list-seperated-exclude-first list-unstyled">
-                            <li>
-                                <article class="post post--overlay post--overlay-bottom cat-4">
-                                    <div class="background-img background-img--darkened"
-                                        style="background-image: url('img/demo/tech-1-16_9.jpg')"></div>
-                                    <div class="post__text inverse-text">
-                                        <div class="post__text-inner">
-                                            <div class="media">
-                                                <div class="media-left media-middle"><span class="list-index">1</span>
-                                                </div>
-                                                <div class="media-body media-middle">
-                                                    <h3 class="post__title typescale-1">New spacesuit system
-                                                        could repel destructive moon dust</h3>
-                                                    <div class="post__meta"><a href="#cat-url"
-                                                            class="post__cat post__cat--bg cat-theme-bg">Tech</a>
-                                                        <a href="#" class="post__comments"><i
-                                                                class="mdicon mdicon-chat_bubble_outline"></i>68
-                                                            comments</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><a href="#" class="link-overlay"></a>
-                                </article>
-                            </li>
-                            <li>
-                                <article class="post cat-5">
-                                    <div class="media">
-                                        <div class="media-left media-middle"><span class="list-index">2</span>
-                                        </div>
-                                        <div class="media-body media-middle">
-                                            <h3 class="post__title typescale-0"><a href="#single-url">Cafe
-                                                    business tough but critical to local economy</a></h3>
-                                            <div class="post__meta"><a href="#cat-url"
-                                                    class="post__cat post__cat--bg cat-theme-bg">Business</a> <a
-                                                    href="#" class="post__comments"><i
-                                                        class="mdicon mdicon-chat_bubble_outline"></i>68
-                                                    comments</a></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                            <li>
-                                <article class="post cat-6">
-                                    <div class="media">
-                                        <div class="media-left media-middle"><span class="list-index">3</span>
-                                        </div>
-                                        <div class="media-body media-middle">
-                                            <h3 class="post__title typescale-0"><a href="#single-url">15
-                                                    Caribbean vacations that are worth the price</a></h3>
-                                            <div class="post__meta"><a href="#cat-url"
-                                                    class="post__cat post__cat--bg cat-theme-bg">Travel</a> <a href="#"
-                                                    class="post__comments"><i
-                                                        class="mdicon mdicon-chat_bubble_outline"></i>68
-                                                    comments</a></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                            <li>
-                                <article class="post cat-4">
-                                    <div class="media">
-                                        <div class="media-left media-middle"><span class="list-index">4</span>
-                                        </div>
-                                        <div class="media-body media-middle">
-                                            <h3 class="post__title typescale-0"><a href="#single-url">watchOS 4
-                                                    brings more intelligence and fitness features to Apple
-                                                    Watch</a></h3>
-                                            <div class="post__meta"><a href="#cat-url"
-                                                    class="post__cat post__cat--bg cat-theme-bg">Tech</a> <a href="#"
-                                                    class="post__comments"><i
-                                                        class="mdicon mdicon-chat_bubble_outline"></i>68
-                                                    comments</a></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                        </ol>
-                    </div><!-- Widget Indexed posts C -->
                     <!-- Widget posts list -->
                     <div class="mnmd-widget-posts-list mnmd-widget widget">
                         <div class="widget__title">
-                            <h4 class="widget__title-text">Latest</h4>
+                            <h4 class="widget__title-text">Bài viết mới nhất</h4>
                         </div>
                         <ul class="posts-list list-space-sm list-unstyled">
                             <li>
@@ -623,8 +547,7 @@
                                     <div class="post__thumb"><a href="#single-url"><img
                                                 src="/assets/clients/img/demo/news-1-1_1.jpg"></a></div>
                                     <div class="post__text">
-                                        <h3 class="post__title typescale-0"><a href="#">Another frosty morning
-                                                for the country as winter starts to bite</a></h3>
+                                        <h3 class="post__title typescale-0"><a href="#"></a></h3>
                                         <div class="post__meta"><a href="#" class="post__comments"><i
                                                     class="mdicon mdicon-chat_bubble_outline"></i>108
                                                 comments</a></div>

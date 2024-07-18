@@ -24,7 +24,10 @@
                                             <img src="{{ $post->image }}">
                                         </a>
                                     </div>
-                                    <div class="post__text"><a href="#" class="post__cat cat-theme">Tech</a>
+                                    <div class="post__text"><a
+                                            href="{{ route('post-catalogue', $post->post_catalogue_id) }}"
+                                            class="post__cat cat-theme">{{
+                                            $post->post_catalogue_name }}</a>
                                         <h3 class="post__title typescale-2">
                                             <a href="{{ route('post-detail', ['id'=>$post->id]) }}">{{ $post->name
                                                 }}</a>
@@ -32,14 +35,21 @@
                                         <div class="post__excerpt">
                                             {!! $post->description !!}
                                         </div>
-                                        <div class="post__meta"><span class="entry-author">By <a href="#"
-                                                    class="entry-author__name">Ryan Reynold</a></span> <time
-                                                class="time published" datetime="2016-08-20T08:53+00:00"
-                                                title="August 20, 2016 at 08:53 am"><i
-                                                    class="mdicon mdicon-schedule"></i>{{
-                                                convertDateTime($post->created_at) }}</time> <a href="#single-url"
-                                                title="21 comments"><i
-                                                    class="mdicon mdicon-chat_bubble_outline"></i>21</a></div>
+                                        <div class="post__meta">
+                                            <span class="entry-author">Tạo bởi
+                                                <a href="#" class="entry-author__name">
+                                                    {{ $post->users->fullname }}
+                                                </a>
+                                            </span>
+                                            <time class="time published">
+                                                <i class="mdicon mdicon-schedule"></i>{{
+                                                convertDateTime($post->created_at) }}
+                                            </time>
+                                            <a href="#" title="21 comments">
+                                                <i class="mdicon mdicon-chat_bubble_outline"></i>
+                                                0
+                                            </a>
+                                        </div>
                                     </div>
                                 </article>
                             </div>
@@ -49,34 +59,25 @@
                                 alt="not-content">
                             @endif
                         </div>
-                        <nav class="mnmd-pagination">
-                            {{-- <h4 class="mnmd-pagination__title sr-only">Posts navigation</h4>
-                            <div class="mnmd-pagination__links text-center"><a
-                                    class="mnmd-pagination__item mnmd-pagination__item-prev" href="#"><i
-                                        class="mdicon mdicon-arrow_back"></i></a> <a class="mnmd-pagination__item"
-                                    href="#">1</a> <span
-                                    class="mnmd-pagination__item mnmd-pagination__item-current">2</span> <a
-                                    class="mnmd-pagination__item" href="#">3</a> <a class="mnmd-pagination__item"
-                                    href="#">4</a> <span
-                                    class="mnmd-pagination__item mnmd-pagination__dots">&hellip;</span> <a
-                                    class="mnmd-pagination__item" href="#">26</a> <a
-                                    class="mnmd-pagination__item mnmd-pagination__item-next" href="#"><i
-                                        class="mdicon mdicon-arrow_forward"></i></a>
-                            </div> --}}
+                        <nav class="mnmd-pagination text-center">
+                            <h4 class="mnmd-pagination__title sr-only">Posts navigation</h4>
+                            {{ $posts->links('pagination::bootstrap-4') }}
                         </nav>
+
                     </div><!-- .mnmd-block -->
                 </div><!-- .mnmd-main-col -->
                 <div class="mnmd-sub-col mnmd-sub-col--right sidebar js-sticky-sidebar" role="complementary">
                     <div class="mnmd-widget widget widget-subscribe widget-subscribe--stack-bottom">
                         <div class="widget-subscribe__inner">
                             <div class="subscribe-form subscribe-form--center">
-                                <p><b class="typescale-3">Don't miss the new designs!</b></p>
-                                <p>Enter your email to receive daily round-up of most submissions</p>
+                                <p><b class="typescale-3">Đừng bỏ lỡ những tin mới!</b></p>
+                                <p>Nhập email của bạn để nhận được tổng hợp hàng ngày của hầu hết các bài gửi</p>
                                 <div class="subscribe-form__fields">
-                                    <p><label>Email address:</label><input type="email" name="EMAIL"
-                                            placeholder="Your email address" required=""></p>
+                                    <p><label>Địa chỉ Email:</label><input type="email" name="EMAIL"
+                                            placeholder="Địa chỉ email của bạn" required=""></p>
                                     <p><input type="submit" value="Subscribe" class="btn-block"></p>
-                                </div><small>Don't worry, we don't spam</small>
+                                </div>
+                                <small>Đừng lo lắng, chúng tôi không spam</small>
                             </div>
                         </div>
                     </div><!-- .widget -->
@@ -89,7 +90,7 @@
                                         <div class="social-tile__inner flexbox">
                                             <div class="social-tile__left flexbox__item">
                                                 <h5 class="social-tile__title meta-font">Facebook</h5><span
-                                                    class="social-tile__count">2.7k likes</span>
+                                                    class="social-tile__count">2.7k thích</span>
                                             </div>
                                             <div class="social-tile__right"><i class="mdicon mdicon-arrow_forward"></i>
                                             </div>
@@ -101,7 +102,7 @@
                                         <div class="social-tile__inner flexbox">
                                             <div class="social-tile__left flexbox__item">
                                                 <h5 class="social-tile__title meta-font">Twitter</h5><span
-                                                    class="social-tile__count">1.2k followers</span>
+                                                    class="social-tile__count">1.2k người theo dõi</span>
                                             </div>
                                             <div class="social-tile__right"><i class="mdicon mdicon-arrow_forward"></i>
                                             </div>
@@ -113,7 +114,7 @@
                                         <div class="social-tile__inner flexbox">
                                             <div class="social-tile__left flexbox__item">
                                                 <h5 class="social-tile__title meta-font">Youtube</h5><span
-                                                    class="social-tile__count">480k subscribers</span>
+                                                    class="social-tile__count">480k người đăng ký</span>
                                             </div>
                                             <div class="social-tile__right"><i class="mdicon mdicon-arrow_forward"></i>
                                             </div>
@@ -124,6 +125,8 @@
                     </div><!-- .widget -->
                 </div><!-- .mnmd-sub-col -->
             </div><!-- .row -->
+            <div class="row">
+            </div>
         </div><!-- .container -->
     </div><!-- .mnmd-block -->
 </div>

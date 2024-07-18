@@ -25,6 +25,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             'posts.album',
             'posts.follow',
             'posts.created_at',
+            'posts.user_id',
             'tb2.name',
             'tb2.description',
             'tb2.content',
@@ -32,10 +33,12 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             'tb2.meta_title',
             'tb2.meta_description',
             'tb2.canonical',
+            'tb3.name as post_catalogue_name'
         ];
         return $this->model
             ->select($select)
             ->join('post_language as tb2', 'posts.id', '=', 'tb2.post_id')
+            ->join('post_catalogue_language as tb3', 'posts.post_catalogue_id', '=', 'tb3.post_catalogue_id')
             ->where('tb2.language_id', $languageId)
             ->with(['post_catalogues', 'users'])
             ->find($id);
@@ -51,6 +54,8 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             'posts.icon',
             'posts.album',
             'posts.follow',
+            'posts.created_at',
+            'posts.user_id',
             'tb2.name',
             'tb2.description',
             'tb2.content',
@@ -76,6 +81,6 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         if (!empty($condition['keyword'])) {
             $query->where('tb2.name', 'LIKE', '%' . $condition['keyword'] . '%');
         }
-        return $query->paginate($perPage);
+        return $query->paginate(1);
     }
 }
