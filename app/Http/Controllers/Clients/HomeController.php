@@ -26,13 +26,35 @@ class HomeController extends Controller
         $config['seo'] = [
             'title' => 'Trang chủ',
         ];
-        $posts = $this->postRepository->all();
+        $postCatalogues = $this->postCatalogueRepository->getAllPostByCatalogue();
+        // dd($postCatalogues);
+        $posts = [];
+        foreach ($postCatalogues as $postCatalogue) {
+            if (!isset($posts[$postCatalogue->id])) {
+                $posts[$postCatalogue->id] = [
+                    'id' => $postCatalogue->id,
+                    'name' => $postCatalogue->name,
+                    'posts' => [],
+                ];
+            }
+
+            $posts[$postCatalogue->id]['posts'][] = [
+                'post_id' => $postCatalogue->post_id,
+                'post_name' => $postCatalogue->post_name,
+                'canonical' => $postCatalogue->canonical,
+                'description' => $postCatalogue->description,
+                'image' => $postCatalogue->image,
+                'created_at' => $postCatalogue->created_at,
+            ];
+        }
+        // dd($posts);
+
         $postBanners = $this->postRepository->all();
 
 
         return view('clients.home.index', compact([
             'config',
-            'postBanners'
-        ]));
+            'postBanners',
+        ]), ['postCatalogues' => $posts]);
     }
 }

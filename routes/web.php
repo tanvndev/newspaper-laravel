@@ -30,7 +30,9 @@ use App\Http\Controllers\Clients\{
 
 // CLIENT ROUTES
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('post-catalogue/{id}', [ClientPostController::class, 'catalogues'])->name('post-catalogue');
+Route::get('post-catalogue/{id?}', [ClientPostController::class, 'catalogues'])
+    ->name('post-catalogue');
+
 Route::get('post-detail/{id}', [ClientPostController::class, 'detail'])->name('post-detail');
 
 // Route::get('{canonical}', [RouterController::class, 'index'])

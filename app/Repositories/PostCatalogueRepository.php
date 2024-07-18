@@ -38,4 +38,26 @@ class PostCatalogueRepository extends BaseRepository implements PostCatalogueRep
             ->where('tb2.language_id', $languageId)
             ->find($id);
     }
+
+    public function getAllPostByCatalogue()
+    {
+        $select = [
+            'post_catalogues.id',
+            'tb2.name',
+            'tb2.canonical',
+            'tb3.id as post_id',
+            'tb3.image',
+            'tb4.name as post_name',
+            'tb4.canonical',
+            'tb4.description',
+            'tb3.created_at',
+        ];
+        return $this->model
+            ->select($select)
+            ->join('post_catalogue_language as tb2', 'post_catalogues.id', '=', 'tb2.post_catalogue_id')
+            ->where('tb2.language_id', session('currentLanguage', 1))
+            ->join('posts as tb3', 'post_catalogues.id', '=', 'tb3.post_catalogue_id')
+            ->join('post_language as tb4', 'tb3.id', '=', 'tb4.post_id')
+            ->get();
+    }
 }

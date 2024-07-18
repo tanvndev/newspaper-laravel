@@ -18,21 +18,23 @@ class PostCatalogueController extends Controller
         $this->postCatalogueRepository = $postCatalogueRepository;
     }
 
-    public function catalogues($id)
+    public function catalogues($id = null)
     {
-        $postCatalogues = $this->postCatalogueRepository->findByWhere(
-            [
-                'id' => ['=', $id],
-                'publish' => ['=', 1]
-            ],
-            ['*'],
-            [
-                ['languages' => function ($query) {
-                    $query->where('language_id', session('currentLanguage', 1));
-                }]
-            ],
-            true,
-        );
-        dd($postCatalogues);
+        if (!empty($id)) {
+            $postCatalogues = $this->postCatalogueRepository->findByWhere(
+                [
+                    'id' => ['=', $id],
+                    'publish' => ['=', 1]
+                ],
+                ['*'],
+                [
+                    ['languages' => function ($query) {
+                        $query->where('language_id', session('currentLanguage', 1));
+                    }]
+                ],
+                true,
+            );
+            dd($postCatalogues);
+        }
     }
 }

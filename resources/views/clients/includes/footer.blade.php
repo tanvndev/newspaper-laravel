@@ -11,12 +11,12 @@
         <div class="container">
             <nav class="footer-menu">
                 <ul id="menu-footer-menu" class="navigation navigation--footer navigation--center">
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="#">Buy theme</a></li>
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="theme-introduction.html">All features</a></li>
-                    <li><a href="https://themeforest.net/user/minimaldog/portfolio?ref=minimaldog">Other
-                            themes</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Tin tức</a></li>
+
                 </ul>
             </nav>
         </div>
@@ -33,9 +33,8 @@
     </div>
     <div class="site-footer__section">
         <div class="container">
-            <div class="text-center">The Next Mag &copy; 2017. Made with &#9749; by <a
-                    href="https://themeforest.net/user/minimaldog/portfolio?ref=minimaldog" target="_blank">minimaldog
-                    Themes</a></div>
+            <div class="text-center">Website &copy; {{ date('Y') }}. Tạo bởi &#9749; <a href="#" target="_blank">Vu Ngoc
+                    Tan</a></div>
         </div>
     </div>
 </footer>

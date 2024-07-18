@@ -16,9 +16,12 @@ class PostController extends Controller
         $this->postRepository = $postRepository;
     }
 
-    public function catalogues($id)
+    public function catalogues($id = null)
     {
-        $posts = $this->postRepository->getPostLanguageByCatalogueId($id, session('currentLanguage', 1));
+        $condition = [
+            'keyword' => trim(request('keyword'))
+        ];
+        $posts = $this->postRepository->getPostLanguageByCatalogueId($id, session('currentLanguage', 1), 10, $condition);
         // dd($posts);
         $config['seo'] = [
             'title' => $posts->first()->post_catalogue_name ?? 'Tin tức',

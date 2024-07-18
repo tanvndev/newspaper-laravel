@@ -41,7 +41,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             ->find($id);
     }
 
-    public function getPostLanguageByCatalogueId($catalogueId = 0, $languageId = 0, $perPage = 10)
+    public function getPostLanguageByCatalogueId($catalogueId = 0, $languageId = 0, $perPage = 10, $condition = [])
     {
         $select = [
             'posts.id',
@@ -60,13 +60,22 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             'tb2.canonical',
             'tb3.name as post_catalogue_name'
         ];
-        return $this->model
+
+        $query = $this->model
             ->select($select)
             ->join('post_language as tb2', 'posts.id', '=', 'tb2.post_id')
             ->join('post_catalogue_language as tb3', 'posts.post_catalogue_id', '=', 'tb3.post_catalogue_id')
             ->where('tb2.language_id', $languageId)
-            ->where('posts.post_catalogue_id', $catalogueId)
-            ->with(['post_catalogues', 'users'])
-            ->paginate($perPage);
+            ->with(['post_catalogues', 'users']);
+
+
+        if (!empty($catalogueId)) {
+            $query->where('posts.post_catalogue_id', $catalogueId);
+        }
+
+        if (!empty($condition['keyword'])) {
+            $query->where('tb2.name', 'LIKE', '%' . $condition['keyword'] . '%');
+        }
+        return $query->paginate($perPage);
     }
 }
