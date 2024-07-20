@@ -66,56 +66,7 @@ if (!function_exists('recursive')) {
     }
 }
 
-if (!function_exists('recursive_menu')) {
-    function recursive_menu($data)
-    {
-        $html = '';
-        foreach ($data as $value) {
-            $itemId = $value['item']->id;
-            $itemName = $value['item']->languages->first()->pivot->name;
-            $itemUrl = route('menu.children', $itemId);
 
-            $html .= "<li class=\"dd-item\" data-id=\"{$itemId}\">";
-            $html .= "<div class=\"dd-handle\">{$itemName}</div>";
-            $html .= "<a class=\"link-info create-children-menu\" href=\"{$itemUrl}\">Quản lý menu con</a>";
-
-            if (!empty($value['children'])) {
-                $html .= "<ol class=\"dd-list\">" . recursive_menu($value['children']) . "</ol>";
-            }
-
-            $html .= "</li>";
-        }
-        return $html;
-    }
-}
-
-if (!function_exists('client_recursive_menu')) {
-    function client_recursive_menu($data, $parentId = 0, $type = 'html')
-    {
-        $html = '';
-        if (count($data) > 0) {
-            if ($type == 'html') {
-                foreach ($data as $key => $value) {
-                    $name = $value['item']->languages->first()->pivot->name;
-                    $canonical = write_url($value['item']->languages->first()->pivot->canonical);
-
-                    if (count($value['children']) > 0) {
-                        $html .= '<li class="menu-item-has-children">';
-                        $html .= "<a title=\"{$name}\" href=\"{$canonical}\">{$name}</a>";
-                        $html .= '<ul class="axil-submenu">';
-                        $html .= client_recursive_menu($value['children'], $value['item']->parent_id);
-                        $html .= '</ul>';
-                        $html .= '</li>';
-                    } else {
-                        $html .= "<li><a title=\"{$name}\" href=\"{$canonical}\">{$name}</a></li>";
-                    }
-                }
-                return $html;
-            }
-        }
-        return $data;
-    }
-}
 
 if (!function_exists('write_url')) {
     function write_url($canonical = '', $fullDomain = true, $suffix = false)
@@ -130,25 +81,7 @@ if (!function_exists('write_url')) {
     }
 }
 
-if (!function_exists('buildMenu')) {
-    function buildMenu($menus = [], $parentId = 0, $prefix = '')
-    {
-        $output = [];
-        $count = 1;
 
-        if (count($menus) > 0) {
-            foreach ($menus as $key => $value) {
-                if ($value->parent_id  == $parentId) {
-                    $value->position = $prefix . $count;
-                    $output[] = $value;
-                    $output = array_merge($output, buildMenu($menus, $value->id, $prefix . $count . '.'));
-                    $count++;
-                }
-            }
-        }
-        return $output;
-    }
-}
 
 if (!function_exists('convertArrayByKey')) {
     function convertArrayByKey($data = null, $fields)
@@ -179,40 +112,10 @@ if (!function_exists('convertDateTime')) {
         return date($format, strtotime($dateTime));
     }
 }
-if (!function_exists('renderDiscountInfomation')) {
-    function renderDiscountInfomation($promotion = null)
-    {
-        if ($promotion->method == 'product_and_quantity') {
-            $discountValue = $promotion->discount_infomation['info']['discount_value'];
-            $discountType = $promotion->discount_infomation['info']['discount_type'] == 'percent' ? '%' : 'đ';
-
-            return "<span class='badge bg-success px-3 py-2 fs-12'>$discountValue$discountType</span>";
-        }
-        return "<a class='link-primary' href='" . route('promotion.edit', $promotion->id) . "'>Xem chi tiết</a>";
-    }
-}
 
 
-if (!function_exists('renderQuickView')) {
-    function renderQuickView($product, $canonical, $name)
-    {
-        $html = "
-        <li class='select-option'>
-            <a ";
 
-        if (isset($product->product_variants) && count($product->product_variants) > 0) {
-            $html .= "data-bs-toggle='modal' data-bs-target='#quick-view-modal' ";
-        }
 
-        $html .= "href='{{ $canonical }}' title='{{$name}}'>
-                Thêm vào giỏ hàng
-            </a>
-        </li>
-        ";
-
-        return $html;
-    }
-}
 
 if (!function_exists('seo')) {
     function seo($model)
@@ -254,102 +157,7 @@ if (!function_exists('sortString')) {
     }
 }
 
-if (!function_exists('getPrice')) {
-    function getPrice($product)
-    {
-        $promotion = null;
 
-        if (isset($product->promotion)) {
-            if (!is_null($product->promotion[0])) {
-                $promotion = $product->promotion[0];
-            } elseif (!is_null($product->promotion)) {
-                $promotion = $product->promotion;
-            }
-        }
-
-        $result = calculatePrice($product->price, $promotion);
-        return $result;
-    }
-}
-
-
-if (!function_exists('getVariantPrice')) {
-    function getVariantPrice($variant, $variantPromotion)
-    {
-        $result = calculatePrice($variant->price, $variantPromotion);
-        return $result;
-    }
-}
-
-if (!function_exists('calculatePrice')) {
-    function calculatePrice($price, $promotion = null)
-    {
-        $result = [
-            'price' => $price,
-            'priceSale' => $price,
-            'percent' => 0,
-            'priceHtml' => '',
-            'discountHtml' => '',
-        ];
-
-        $formattedPrice = formatCurrency($price);
-
-        if (!is_null($promotion)) {
-
-            if ($promotion->discount_type == 'percent') {
-                $result['percent'] = $promotion->discount_value;
-            } else {
-                $result['percent'] = ($promotion->discount_value / $result['price']) * 100;
-            }
-
-            // dd($promotion);
-
-            $result['priceSale'] = $result['price'] - $promotion->discount;
-            $priceSale = formatCurrency($result['priceSale']);
-
-            $result['priceHtml'] = "
-                <span class='price current-price'>{$priceSale}</span>
-                <span class='price old-price'>{$formattedPrice}</span>
-            ";
-
-            $result['discountHtml'] = "
-                <div class='label-block label-right product-variant-disocunt'>
-                    <div class='product-badget'>Giảm {$result['percent']}%</div>
-                </div>
-            ";
-
-            if ($promotion->discount > $price) {
-                $result['priceHtml'] = "<span class='price current-price'>{$formattedPrice}</span>";
-                $result['discountHtml'] = "";
-            }
-        } else {
-            $result['priceHtml'] = "<span class='price current-price'>{$formattedPrice}</span>";
-        }
-
-        return $result;
-    }
-}
-
-if (!function_exists('getReview')) {
-    function getReview($model)
-    {
-        $number = $rate ?? rand(1, 5);
-        $filledStars = round($number, 0);
-        $starArray = array();
-
-        for ($index = 0; $index < 5; $index++) {
-            if ($index < $filledStars) {
-                $starArray[] = '<i class="fas fa-star"></i>';
-            } else {
-                $starArray[] = '<i class="far fa-star"></i>';
-            }
-        }
-        return [
-            'star' => implode(' ', $starArray),
-            'count' => $count ?? rand(1, 999)
-        ];
-    }
-}
 
 if (!function_exists('generateStar')) {
     function generateStar($rate)
@@ -440,27 +248,6 @@ if (!function_exists('sortAttributeId')) {
 }
 
 
-if (!function_exists('renderOrderStatusDropdown')) {
-    function renderOrderStatusDropdown($order, $name, $class = 'w-100 init-nice-select update-order')
-    {
-        $html = '<div class="update-order-wrap">';
-
-        $html .= ' <select name="' . $name . '" id="' . $name . '" data-field="' . $name . '" class="' . $class . '">';
-        foreach (__("cart.{$name}") as $value => $label) {
-            if ($value == '') continue;
-            $isSelected = ($order->{$name} == $value) ? 'selected' : '';
-            $html .= '<option value="' . $value . '" ' . $isSelected . '>' . $label . '</option>';
-        }
-        $html .= '</select>';
-
-        $html .= '</div>';
-
-        if ($order->confirm === 'cancel') {
-            return '<span class="badge text-center bg-danger">Đơn hàng đã hủy</span>';
-        }
-        return $html;
-    }
-}
 
 
 if (!function_exists('convertVndTo')) {
@@ -492,24 +279,5 @@ if (!function_exists('abbreviateName')) {
             $abbreviation .= strtoupper(substr($part, 0, 1));
         }
         return $abbreviation;
-    }
-}
-
-
-if (!function_exists('renderRatingFilter')) {
-    function renderRatingFilter()
-    {
-        $html = '';
-        for ($i = 1; $i <= 5; $i++) {
-            $html .= '<div class="mb-3 ps-0 form-check filter-star">';
-            $html .= '<input type="checkbox" class="form-check-input filtering" name="rate[]" value="' . $i . '" id="rate_' . $i . '">';
-            $html .= '<label class="form-check-label" for="rate_' . $i . '">';
-            for ($j = 0; $j < 5; $j++) {
-                $html .= '<i class="flaticon-star me-1 ' . ($i > $j ? 'active' : '') . '"></i>';
-            }
-            $html .= '</label>';
-            $html .= '</div>';
-        }
-        return $html;
     }
 }
