@@ -47,27 +47,27 @@ Route::middleware(['admin', 'locale'])->group(function () {
     // Routes for Dashboard
     Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index');
 
-
     // Routes for UserCatalogue
     Route::prefix('users/catalogues')->name('users.catalogues.')->group(function () {
         Route::get('permission', [UserCatalogueController::class, 'permission'])->name('permission');
         Route::put('updatePermission', [UserCatalogueController::class, 'updatePermission'])->name('updatePermission');
     });
-    Route::resource('users/catalogues', UserCatalogueController::class)->names([
-        'index' => 'users.catalogues.index',
-        'create' => 'users.catalogues.create',
-        'store' => 'users.catalogues.store',
-        'show' => 'users.catalogues.show',
-        'edit' => 'users.catalogues.edit',
-        'update' => 'users.catalogues.update',
-        'destroy' => 'users.catalogues.destroy',
-    ]);
+
+    Route::prefix('/')->name('users.')->group(function () {
+        Route::resource('users/catalogues', UserCatalogueController::class);
+    });
+
     // Routes for User
     Route::resource('users', UserController::class);
 
     // Routes for Languages
-    Route::resource('languages', UserCatalogueController::class);
+    Route::resource('languages', LanguageController::class);
 
+    Route::prefix('languages')->name('languages.')->group(function () {
+        Route::get('{canonical}/switch', [LanguageController::class, 'switchServerLanguage'])->name('switch');
+        Route::get('{id}/{languageId}/{model}/translate', [LanguageController::class, 'translate'])->where(['id' => '[0-9]+', 'languageId' => '[0-9]+'])->name('translate');
+        Route::put('{id}/handleTranslate', [LanguageController::class, 'handleTranslate'])->where(['id' => '[0-9]+'])->name('handleTranslate');
+    });
 
     // Routes for System
     Route::prefix('system')->name('system.')->group(function () {
@@ -80,15 +80,10 @@ Route::middleware(['admin', 'locale'])->group(function () {
     Route::resource('permissions', PermissionController::class);
 
     // Routes for PostCatalogue
-    Route::resource('posts/catalogues', PostCatalogueController::class)->names([
-        'index' => 'posts.catalogues.index',
-        'create' => 'posts.catalogues.create',
-        'store' => 'posts.catalogues.store',
-        'show' => 'posts.catalogues.show',
-        'edit' => 'posts.catalogues.edit',
-        'update' => 'posts.catalogues.update',
-        'destroy' => 'posts.catalogues.destroy',
-    ]);
+    Route::prefix('/')->name('posts.')->group(function () {
+        Route::resource('posts/catalogues', PostCatalogueController::class);
+    });
+
     // Routes for Post
     Route::resource('posts', PostController::class);
 
@@ -109,10 +104,11 @@ Route::middleware(['admin', 'locale'])->group(function () {
 });
 
 
-Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('logged');
-Route::get('login', [AuthController::class, 'index'])->name('login')->middleware('logged');
+Route::get('admin', [AuthController::class, 'index'])->name('auth.admin');
+Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('signup', [AuthController::class, 'signup'])->name('auth.signup');
+Route::post('signup', [AuthController::class, 'store'])->name('auth.store');
 Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('auth.forgot');
 Route::post('reset-password', [AuthController::class, 'handleForgotPassword'])->name('auth.reset');
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');

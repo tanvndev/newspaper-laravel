@@ -1,6 +1,4 @@
 <form action="{{ route('posts.index') }}" method="get" class="form-list-filter">
-
-
     <div class="row">
         @include('servers.includes.filterPerpage')
 

@@ -53,12 +53,12 @@ return [
             'route' => '',
             'icon' => 'icofont-ui-settings',
             'title' => 'Configuration',
-            'activeCondition' => ['language.*'],
+            'activeCondition' => ['languages.*'],
             'subMenu' => [
                 [
                     'title' => 'Language ',
-                    'route' => 'language.index',
-                    'activeCondition' => ['language.*']
+                    'route' => 'languages.index',
+                    'activeCondition' => ['languages.*']
                 ],
             ]
         ],

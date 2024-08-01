@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    function index()
+    public function index()
     {
+        $this->authorize('modules', 'dashboard.index');
 
         $config['seo'] = __('messages.dashboard')['index'];
         return view('servers.dashboard.index', compact([

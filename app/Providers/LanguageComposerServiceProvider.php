@@ -32,7 +32,6 @@ class LanguageComposerServiceProvider extends ServiceProvider
                 [],
                 true
             );
-            // dd($languages);
             $view->with('languages', $languages);
         });
     }

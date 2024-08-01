@@ -1,4 +1,4 @@
-{!! Form::open(['route' => 'language.index', 'method' => 'get', 'class' => 'form-list-filter']) !!}
+{!! Form::open(['route' => 'languages.index', 'method' => 'get', 'class' => 'form-list-filter']) !!}
 <div class="row">
     @include('servers.includes.filterPerpage')
     <div class="col-lg-7">

@@ -34,8 +34,10 @@
                 @if ($hasSubMenu)
                 <ul class="sub-menu collapse {{ $isActive ? 'show' : ''}}" id="menu-{{ $menuItem['id'] }}">
                     @foreach ($menuItem['subMenu'] as $subMenu)
-                    <li><a class="ms-link {{ request()->routeIs($subMenu['activeCondition']) ? 'active' : ''}}"
-                            href="{{ route($subMenu['route']) }}">{{ $subMenu['title'] }}</a></li>
+                    <li>
+                        <a class="ms-link {{ request()->routeIs($subMenu['activeCondition']) ? 'active' : ''}}"
+                            href="{{ route($subMenu['route']) }}">{{ $subMenu['title'] }}</a>
+                    </li>
                     @endforeach
                 </ul>
                 @endif

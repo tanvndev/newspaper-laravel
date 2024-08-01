@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-{!! Form::open(['method' => 'PUT' , 'url' => route('language.handleTranslate', $modelObject->id), 'files' => true] )
+{!! Form::open(['method' => 'PUT' , 'url' => route('languages.handleTranslate', $modelObject->id), 'files' => true] )
 !!}
 <div class="body d-flex py-3">
 

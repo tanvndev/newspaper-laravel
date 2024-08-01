@@ -37,6 +37,7 @@ class AuthController extends Controller
     {
         return view('servers.auth.forgot');
     }
+
     public function handleForgotPassword(Request $request)
     {
         $validatedData = $request->validate([
@@ -81,7 +82,6 @@ class AuthController extends Controller
         $verificationUrl = URL::signedRoute('signup.verify', ['id' => $user->id]);
         Mail::to($user->email)->send(new SignupVerifyMail($verificationUrl));
     }
-
 
     public function login(AuthRequest $request)
     {

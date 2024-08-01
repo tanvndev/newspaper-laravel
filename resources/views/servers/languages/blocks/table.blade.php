@@ -57,7 +57,7 @@
 
             <td>
                 <div class="btn-group" role="group">
-                    <a href="{{route('language.edit', $language->id)}}" class="btn btn-outline-secondary"><i
+                    <a href="{{route('languages.edit', $language->id)}}" class="btn btn-outline-secondary"><i
                             class="icofont-edit text-success"></i></a>
                     <button type="button" data-id="{{$language->id}}" class="btn btn-outline-secondary btn-delete"
                         data-bs-toggle="modal" data-bs-target="#modal-delete"><i
@@ -71,4 +71,4 @@
 
 </table>
 
-@include('servers.includes.modalDelete', ['routeModalDelete' => 'language.destroy'])
+@include('servers.includes.modalDelete', ['routeModalDelete' => 'languages.destroy'])

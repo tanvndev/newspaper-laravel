@@ -30,7 +30,7 @@ class LanguageController extends Controller
     //
     function index()
     {
-        $this->authorize('modules', 'language.index');
+        $this->authorize('modules', 'languages.index');
 
         $languagesData = $this->languageService->paginate();
         // dd($languages);
@@ -41,7 +41,7 @@ class LanguageController extends Controller
         ]));
     }
 
-    function create()
+    public function create()
     {
         $this->authorize('modules', 'language.create');
 
@@ -58,15 +58,15 @@ class LanguageController extends Controller
         $errorMessage = $this->getToastMessage('language', 'error', 'create');
 
         if ($this->languageService->create()) {
-            return redirect()->route('language.index')->with('toast_success', $successMessage);
+            return redirect()->route('languages.index')->with('toast_success', $successMessage);
         }
 
-        return redirect()->route('language.create')->with('toast_error', $errorMessage);
+        return redirect()->route('languages.create')->with('toast_error', $errorMessage);
     }
 
     public function edit($id)
     {
-        $this->authorize('modules', 'language.edit');
+        $this->authorize('modules', 'languages.edit');
 
         // Gán id vào sesson
         session(['_id' => $id]);
@@ -94,17 +94,17 @@ class LanguageController extends Controller
         // Lấy giá trị sesson
         $idLanguage = session('_id');
         if (empty($idLanguage)) {
-            return redirect()->route('language.index')->with('toast_error', $errorMessage);
+            return redirect()->route('languages.index')->with('toast_error', $errorMessage);
         }
 
         if ($this->languageService->update($idLanguage)) {
             // Xoá giá trị sesson
             session()->forget('_id');
-            return redirect()->route('language.index')->with('toast_success',  $successMessage);
+            return redirect()->route('languages.index')->with('toast_success',  $successMessage);
         }
         // Xoá giá trị sesson
         session()->forget('_id');
-        return redirect()->route('language.create')->with('toast_error', $errorMessage);
+        return redirect()->route('languages.create')->with('toast_error', $errorMessage);
     }
 
     /**
@@ -112,17 +112,17 @@ class LanguageController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->authorize('modules', 'language.destroy');
+        $this->authorize('modules', 'languages.destroy');
         $successMessage = $this->getToastMessage('language', 'success', 'delete');
         $errorMessage = $this->getToastMessage('language', 'error', 'delete');
 
         if ($request->_id == null) {
-            return redirect()->route('language.index')->with('toast_error', $errorMessage);
+            return redirect()->route('languages.index')->with('toast_error', $errorMessage);
         }
         if ($this->languageService->destroy($request->_id)) {
-            return redirect()->route('language.index')->with('toast_success',  $successMessage);
+            return redirect()->route('languages.index')->with('toast_success',  $successMessage);
         }
-        return redirect()->route('language.index')->with('toast_error', $errorMessage);
+        return redirect()->route('languages.index')->with('toast_error', $errorMessage);
     }
 
     public function switchServerLanguage($canonical)
@@ -142,7 +142,7 @@ class LanguageController extends Controller
     public function translate($id, $languageId, $modelName = '')
     {
 
-        $this->authorize('modules', 'language.translate');
+        $this->authorize('modules', 'languages.translate');
 
         // Lây ra repository hiện tại
         $repositoryInstance = $this->getRepositoryInstance($modelName);

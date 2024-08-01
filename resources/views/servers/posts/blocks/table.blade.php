@@ -17,7 +17,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($posts as $post) <tr>
+        @foreach ($posts as $post)
+        <tr>
             <td>
                 <div class="form-check form-table-list-check">
                     <input class="form-check-input check-item" value="{{$post->id}}" type="checkbox">

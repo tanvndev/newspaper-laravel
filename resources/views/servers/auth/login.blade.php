@@ -39,13 +39,13 @@
 											Đăng nhập bằng Google
 										</span>
 									</a>
-									<a class="btn btn-lg btn-light btn-block" href="{{ route('auth.google') }}">
+									{{-- <a class="btn btn-lg btn-light btn-block" href="{{ route('auth.google') }}">
 										<span class="d-flex justify-content-center align-items-center">
 											<img class="avatar xs me-2" src="assets/servers/images/icons8-facebook.svg"
 												alt="Image Description">
 											Đăng nhập bằng Facebook
 										</span>
-									</a>
+									</a> --}}
 								</div>
 								<span class="dividers text-muted mt-4">OR</span>
 							</div>

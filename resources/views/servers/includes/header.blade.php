@@ -30,7 +30,7 @@
                                         <img class="language-item-img" src="{{$language->image}}" alt="">
                                     </span>
                                     <a class="link-body-emphasis"
-                                        href="{{route('language.switch', $language->canonical)}}">{{$language->name}}</a>
+                                        href="{{route('languages.switch', $language->canonical)}}">{{$language->name}}</a>
                                 </li>
                                 @endif
                                 @endforeach

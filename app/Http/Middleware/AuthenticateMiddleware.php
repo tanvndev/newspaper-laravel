@@ -18,6 +18,9 @@ class AuthenticateMiddleware
     {
         if (!Auth::check()) {
             return redirect(route('auth.admin'))->with('toast_error', 'Vui lòng đăng nhập.');
+        } elseif (Auth::user()->user_catalogue_id != 1) {
+            Auth::logout();
+            return redirect(route('auth.admin'))->with('toast_error', 'Bạn không có quyền truy cập.');
         }
         return $next($request);
     }

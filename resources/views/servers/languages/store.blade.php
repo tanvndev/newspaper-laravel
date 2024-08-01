@@ -8,7 +8,7 @@
 
 @section('content')
 @php
-$url = $config['method'] == 'create' ? route('language.store') : route('language.update', $language->id);
+$url = $config['method'] == 'create' ? route('languages.store') : route('languages.update', $language->id);
 $method = $config['method'] == 'create' ? 'POST' : 'PUT';
 @endphp
 

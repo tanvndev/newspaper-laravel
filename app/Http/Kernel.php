@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \RealRashid\SweetAlert\ToSweetAlert::class, // <-- SweetAlert
+            \App\Http\Middleware\LogRequestsAndResponses::class, // <-- Log requests and responses
         ],
 
         'api' => [
@@ -68,7 +69,7 @@ class Kernel extends HttpKernel
 
         // Register
         'admin' => \App\Http\Middleware\AuthenticateMiddleware::class,
-        'logged' => \App\Http\Middleware\LoggedMiddleware::class,
         'locale' => \App\Http\Middleware\SetLocale::class,
+        // 'logged' => \App\Http\Middleware\LoggedMiddleware::class,
     ];
 }
