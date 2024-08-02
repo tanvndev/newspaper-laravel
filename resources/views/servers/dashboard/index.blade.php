@@ -8,8 +8,14 @@
 @endsection
 
 @section('content')
-<div class="body d-flex py-3">
-	<div class="container-xxl">
+<section class="body d-flex py-3">
+	<div class="container-xxl text-center">
+		<img style="width: 800px;" class="img-fluid text-center mt-5"
+			src="https://s1.vnecdn.net/vnexpress/restruct/i/v908/v2_2019/pc/graphics/logo.svg" alt="">
+		<h1 class="mt-5 fw-bold">Chào mừng bạn đến với hệ thống vnexpress nơi bạn quản lý bài viết.</h1>
+	</div>
+
+	{{-- <div class="container-xxl">
 
 		<div class="row g-3 mb-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-4">
 			<div class="col">
@@ -852,6 +858,6 @@
 			</div>
 		</div><!-- Row end  -->
 
-	</div>
-	</section>
-	@overwrite
+	</div> --}}
+</section>
+@overwrite

@@ -2,8 +2,13 @@
     <div class="site-footer__section">
         <div class="container">
             <div class="site-footer__section-inner text-center">
-                <div class="site-logo"><a href="home-1.html"><img src="assets/clients/img/logo-mark-color.png"
-                            alt="logo" width="200"></a></div>
+                <div class="site-logo"><a href="home-1.html">
+                        <img style="filter: brightness(2)"
+                            src="https://s1.vnecdn.net/vnexpress/restruct/i/v908/v2_2019/pc/graphics/logo.svg"
+                            alt="logo" width="200">
+
+                    </a>
+                </div>
             </div>
         </div>
     </div>

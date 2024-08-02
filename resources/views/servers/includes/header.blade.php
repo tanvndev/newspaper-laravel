@@ -1,14 +1,17 @@
 <div class="header">
+    @php
+    $user = auth()->user();
+    @endphp
     <nav class="navbar py-4">
         <div class="container-xxl">
 
             <!-- header rightbar icon -->
             <div class="h-right d-flex align-items-center order-1">
-                <div class="d-flex">
+                {{-- <div class="d-flex">
                     <a class="nav-link text-primary collapsed" href="" title="Get Help">
                         <i class="icofont-info-square fs-5"></i>
                     </a>
-                </div>
+                </div> --}}
                 <div class="dropdown ms-3">
                     <button class="nav-link dropdown-toggle pulse" type="button" role="button"
                         data-bs-toggle="dropdown">
@@ -39,19 +42,19 @@
                     </div>
                 </div>
                 <div class="dropdown  ms-3">
-                    <button class="nav-link dropdown-toggle pulse" type="button" role="button"
+                    {{-- <button class="nav-link dropdown-toggle pulse" type="button" role="button"
                         data-bs-toggle="dropdown">
                         <i class="icofont-alarm fs-5"></i>
-                    </button>
+                    </button> --}}
                     <div id="NotificationsDiv"
                         class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-md-end p-0 m-0 mt-3">
                         <div class="card border-0 w380">
-                            <div class="card-header border-0 p-3">
+                            {{-- <div class="card-header border-0 p-3">
                                 <h5 class="mb-0 font-weight-light d-flex justify-content-between">
                                     <span>Notifications</span>
                                     <span class="badge text-white">06</span>
                                 </h5>
-                            </div>
+                            </div> --}}
                             <div class="tab-content card-body">
                                 <div class="tab-pane fade show active">
                                     <ul class="list-unstyled list mb-0">
@@ -142,23 +145,25 @@
                     </div>
                 </div>
                 <div class="dropdown user-profile ms-3 d-flex align-items-center">
+                    {{-- @dd(auth()->user()) --}}
                     <div class="u-info me-2">
-                        <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">John
-                                Quinn</span></p>
-                        <small>Admin Profile</small>
+                        <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">{{
+                                $user->fullname }}</span></p>
+                        <small>{{ $user->user_catalogues->name }}</small>
                     </div>
                     <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown"
                         data-bs-display="static">
-                        <img class="avatar lg rounded-circle img-thumbnail" src="" alt="profile">
+                        <img class="avatar lg rounded-circle img-thumbnail" src="{{ $user->image }}" alt="profile">
                     </a>
                     <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
                         <div class="card border-0 w280">
                             <div class="card-body pb-0">
                                 <div class="d-flex py-1">
-                                    <img class="avatar rounded-circle" src="" alt="profile">
+                                    <img class="avatar rounded-circle" src="{{ $user->image }}" alt="profile">
                                     <div class="flex-fill ms-3">
-                                        <p class="mb-0"><span class="font-weight-bold">John Quinn</span></p>
-                                        <small class="">Johnquinn@gmail.com</small>
+                                        <p class="mb-0"><span class="font-weight-bold">{{ $user->fullname }}</span>
+                                        </p>
+                                        <small class="">{{ $user->email }}</small>
                                     </div>
                                 </div>
 
@@ -168,12 +173,13 @@
                             </div>
                             <div class="list-group m-2 ">
                                 <a href="admin-profile.html" class="list-group-item list-group-item-action border-0 "><i
-                                        class="icofont-ui-user fs-5 me-3"></i>Profile Page</a>
+                                        class="icofont-ui-user fs-5 me-3"></i>Bài viết</a>
                                 <a href="order-invoices.html"
                                     class="list-group-item list-group-item-action border-0 "><i
-                                        class="icofont-file-text fs-5 me-3"></i>Order Invoices</a>
-                                <a href="auth-signin.html" class="list-group-item list-group-item-action border-0 "><i
-                                        class="icofont-logout fs-5 me-3"></i>Signout</a>
+                                        class="icofont-file-text fs-5 me-3"></i>Ngôn ngữ</a>
+                                <a href="{{ route('auth.logout') }}"
+                                    class="list-group-item list-group-item-action border-0 "><i
+                                        class="icofont-logout fs-5 me-3"></i>Đăng xuất</a>
                             </div>
                         </div>
                     </div>
@@ -192,12 +198,12 @@
 
             <!-- main menu Search-->
             <div class="order-0 col-lg-4 col-md-4 col-sm-12 col-12 mb-3 mb-md-0 ">
-                <div class="input-group flex-nowrap input-group-lg">
+                {{-- <div class="input-group flex-nowrap input-group-lg">
                     <input type="search" class="form-control" placeholder="Search" aria-label="search"
                         aria-describedby="addon-wrapping">
                     <button type="button" class="input-group-text" id="addon-wrapping"><i
                             class="fa fa-search"></i></button>
-                </div>
+                </div> --}}
             </div>
 
         </div>

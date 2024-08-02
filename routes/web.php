@@ -23,9 +23,7 @@ use App\Http\Controllers\Servers\{
 
 use App\Http\Controllers\Clients\{
     HomeController,
-    PostCatalogueController as ClientPostCatalogueController,
     PostController as ClientPostController,
-    RouterController,
 };
 
 // CLIENT ROUTES
@@ -34,12 +32,6 @@ Route::get('post-catalogue/{id?}', [ClientPostController::class, 'catalogues'])
     ->name('post-catalogue');
 
 Route::get('post-detail/{id}', [ClientPostController::class, 'detail'])->name('post-detail');
-
-// Route::get('{canonical}', [RouterController::class, 'index'])
-//     ->where('canonical', '^(?!admin$)[0-9a-zA-Z-]+$')
-//     ->name('router.index');
-
-// Route::post('ajax/comment/store', [AjaxCommentController::class, 'store'])->name('ajax.comment.store');
 
 
 // SERVER ROUTES
@@ -119,9 +111,4 @@ Route::get('signup/verify/{id}', [VerificationController::class, 'signupVerify']
 Route::controller(GoogleController::class)->group(function () {
     Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
     Route::get('auth/google/callback', 'handleGoogleCallback');
-});
-
-Route::controller(FacebookController::class)->group(function () {
-    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
-    Route::get('auth/facebook/callback', 'handleFacebookCallback');
 });
